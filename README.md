@@ -9,7 +9,7 @@ You will find  more information about using Spring Boot + Kotlin in these 2 blog
 
 ## Spring + Kotlin FAQ
 
-###What is the simplest way to start a Spring Boot + kotlin application?
+###What is the simplest way to start a Spring Boot + Kotlin application?
 
 Go to http://start.spring.io/#!language=kotlin, add your dependencies, choose Gradle or Maven and click on "Generate Project" ;-)
 
