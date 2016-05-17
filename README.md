@@ -9,6 +9,10 @@ You will find  more information about using Spring Boot + Kotlin in these 2 blog
 
 ## Spring + Kotlin FAQ
 
+###What is the simplest way to start a Spring Boot + kotlin application?
+
+Go to http://start.spring.io/#!language=kotlin, add your dependencies, choose Gradle or Maven and click on "Generate Project" ;-)
+
 ###Where this "Configuration problem: @Configuration class 'Foo' may not be final" error message come from?
 
 Spring applications are using proxies to deal with most `@Component` beans like `@Configuration`, `@Service`or `@Repository`. JDK dynamic proxies are used when possible (your bean should implement an interface, and `proxyTargetClass` should be set to `false`, which is the default) while CGLIB proxies are used with classes that do not expose methods with interfaces, and/or when `proxyTargetClass` is set to `true`.
