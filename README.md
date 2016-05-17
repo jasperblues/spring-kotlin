@@ -19,7 +19,7 @@ So current best practice is:
  - Add `open` modifier at class level for `@Configuration` class and at `@Bean` methods level since they require CGLIB proxies
  - Use JDK dynamic proxies for other `@Component` beans like `@Service` and `@Repository` by implementing interfaces and making sure `proxyTargetClass=false`. Be aware that Spring Boot [set `proxyTargetClass=true` by default when JDBC is used](https://github.com/spring-projects/spring-boot/commit/58d660d10d7abb5fe2ea502b6c538714bede62ea#diff-3f2cf0894a5a46136680f76234aeee28R41), to use JDK dynamic proxies instead you just have to declare a `PersistenceExceptionTranslationPostProcessor` `@Bean` like [here](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/Application.kt#L34).
 
-###Why annotation array attribute value require `arrayOf()` for single value unlike in Java?
+###Why annotation array attributes require `arrayOf()` for single value unlike in Java?
 
 That's a known Kotlin 1.0 issue quite annoying with Spring annotations like `@RequestMapping(method = arrayOf(RequestMethod.GET))`, that will be fixed in Kotlin 1.1, see issue [KT-11235](https://youtrack.jetbrains.com/issue/KT-11235) for more details. As a workaround, as of Spring Framework 4.3 / Spring Boot 1.4 you can use annotations aliases like `@GetMapping`, `@PostMapping`, etc.
 
