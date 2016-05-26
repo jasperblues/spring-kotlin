@@ -7,12 +7,22 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.+'
     }
 }
 
+plugins {
+    id 'maven-publish'
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+    id 'nebula.nebula-release' version '4.0.1'
+    id 'com.jfrog.bintray' version '1.6'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'nebula.optional-base' version '3.1.0'
+}
+
 apply plugin: 'kotlin'
-apply plugin: 'nebula.optional-base'
+
+group = 'org.springframework'
 
 repositories {
     mavenCentral()
@@ -24,4 +34,70 @@ dependencies {
 
     testCompile 'junit:junit:4.+'
     testCompile 'org.assertj:assertj-core:3.+'
+}
+
+bintray {
+    user = 'sdeleuze'
+    key = System.getenv('BINTRAY_KEY')
+    dryRun = false
+    publish = true
+    publications = ['Bintray']
+
+    pkg {
+        repo = 'maven'
+        name = 'spring-kotlin'
+        vcsUrl = 'git@github.com:sdeleuze/spring-kotlin.git'
+        websiteUrl = 'https://github.com/sdeleuze/spring-kotlin'
+        issueTrackerUrl = 'https://github.com/sdeleuze/spring-kotlin/issues'
+        licenses = ['Apache-2.0']
+        labels = ['spring', 'kotlin']
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+            vcsTag = project.version
+        }
+    }
+}
+
+publishing {
+    publications {
+        Bintray(MavenPublication) {
+            pom.withXml {
+                def node = asNode()
+                node.children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+
+                    name 'spring-kotlin'
+                    description 'power assertions for java'
+                    url 'https://github.com/sdeleuze/spring-kotlin'
+                    scm {
+                        url 'https://github.com/sdeleuze/spring-kotlin.git'
+                        connection 'scm:git@github.com:sdeleuze/spring-kotlin.git'
+                        developerConnection 'git@github.com:sdeleuze/spring-kotlin.git'
+                        tag 'HEAD'
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/license/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'sdeleuze'
+                            name 'Sébastien Deleuze'
+                            email 'sdeleuze@pivotal.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+    }
 }
