@@ -1,3 +1,5 @@
+[![Build status](https://travis-ci.org/sdeleuze/spring-kotlin.svg?branch=master)](https://travis-ci.org/sdeleuze/spring-kotlin)
+
 `spring-kotlin` is a repository that contains Kotlin extensions, documentation,
 and any helpful assets that can help to build Spring + Kotlin applications. 
 
