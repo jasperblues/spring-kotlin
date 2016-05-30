@@ -59,9 +59,28 @@ bintray {
     }
 }
 
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+task javadocJar (type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
 publishing {
     publications {
         Bintray(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier 'sources'
+            }
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }
+
             pom.withXml {
                 def node = asNode()
                 node.children().last() + {
