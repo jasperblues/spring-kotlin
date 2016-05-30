@@ -9,6 +9,20 @@ You will find  more information about using Spring Boot + Kotlin in these 2 blog
  - [Developing Spring Boot applications with Kotlin](https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin)
  - [A Geospatial Messenger with Kotlin, Spring Boot and PostgreSQL](https://spring.io/blog/2016/03/20/a-geospatial-messenger-with-kotlin-spring-boot-and-postgresql)
 
+## Using Spring Kotlin
+
+To use Spring Kotlin extensions, add the following dependency in your `build.gradle` file, with `x.y.z` replaced by the latest release available [here](https://bintray.com/sdeleuze/maven/spring-kotlin/):
+
+```gradle
+repositories {
+  maven { url 'https://dl.bintray.com/sdeleuze/maven' }
+}
+
+dependencies {
+  compile 'org.springframework.kotlin:spring-kotlin:x.y.z'
+}
+```
+
 ## Spring + Kotlin FAQ
 
 ###What is the simplest way to start a Spring Boot + Kotlin application?
@@ -19,9 +33,9 @@ Go to http://start.spring.io/#!language=kotlin, add your dependencies, choose Gr
 
 Spring applications are using proxies to deal with most `@Component` beans like `@Configuration`, `@Service`or `@Repository`. JDK dynamic proxies are used when possible (your bean should implement an interface, and `proxyTargetClass` should be set to `false`, which is the default) while CGLIB proxies are used with classes that do not expose methods with interfaces, and/or when `proxyTargetClass` is set to `true`.
 
-Unlike Java, Kotlin [have made the choice to have a `final` by default behavior](https://discuss.kotlinlang.org/t/classes-final-by-default/166), with `open` keyword used at class or method level to allow extending or overriding them. As a consequence, with CGLIB proxies you need to explicitely specify `open` at class and method level since they require to extend/override the class/methods for technical reasons. There is some discussions on issue [KT-12149](https://youtrack.jetbrains.com/issue/KT-12149) and [here](https://github.com/spring-projects/spring-boot/issues/5537#issuecomment-218005683) to see if we can find a solution but there is no perfect one yet. JDK dynamic proxy works perfectly well with Kotlin and are considered as best practice, but can't be used everywhere.
+Unlike Java, Kotlin [have made the choice to have a `final` by default behavior](https://discuss.kotlinlang.org/t/classes-final-by-default/166), with `open` keyword used at class or method level to allow extending or overriding them. As a consequence, with CGLIB proxies you need to explicitely specify `open` at class and method level since they require to extend/override the class/methods for technical reasons. Kotlin team is working on a solution that will allow you to use CGLIB proxies without having to use the `open` keyword, see [KT-12149](https://youtrack.jetbrains.com/issue/KT-12149) for more details.
 
-So current best practice is:
+Weanwhile, current best practice is:
  - Add `open` modifier at class level for `@Configuration` class and at `@Bean` methods level since they require CGLIB proxies
  - Use JDK dynamic proxies for other `@Component` beans like `@Service` and `@Repository` by implementing interfaces and making sure `proxyTargetClass=false`. Be aware that Spring Boot [set `proxyTargetClass=true` by default when JDBC is used](https://github.com/spring-projects/spring-boot/commit/58d660d10d7abb5fe2ea502b6c538714bede62ea#diff-3f2cf0894a5a46136680f76234aeee28R41), to use JDK dynamic proxies instead you just have to declare a `PersistenceExceptionTranslationPostProcessor` `@Bean` like [here](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/Application.kt#L34).
 
