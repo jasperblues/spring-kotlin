@@ -35,7 +35,7 @@ Spring applications are using proxies to deal with most `@Component` beans like 
 
 Unlike Java, Kotlin [have made the choice to have a `final` by default behavior](https://discuss.kotlinlang.org/t/classes-final-by-default/166), with `open` keyword used at class or method level to allow extending or overriding them. As a consequence, with CGLIB proxies you need to explicitely specify `open` at class and method level since they require to extend/override the class/methods for technical reasons. Kotlin team is working on a solution that will allow you to use CGLIB proxies without having to use the `open` keyword, see [KT-12149](https://youtrack.jetbrains.com/issue/KT-12149) for more details.
 
-Weanwhile, current best practice is:
+Meanwhile, current best practice is:
  - Add `open` modifier at class level for `@Configuration` class and at `@Bean` methods level since they require CGLIB proxies
  - Use JDK dynamic proxies for other `@Component` beans like `@Service` and `@Repository` by implementing interfaces and making sure `proxyTargetClass=false`. Be aware that Spring Boot [set `proxyTargetClass=true` by default when JDBC is used](https://github.com/spring-projects/spring-boot/commit/58d660d10d7abb5fe2ea502b6c538714bede62ea#diff-3f2cf0894a5a46136680f76234aeee28R41), to use JDK dynamic proxies instead you just have to declare a `PersistenceExceptionTranslationPostProcessor` `@Bean` like [here](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/Application.kt#L34).
 
