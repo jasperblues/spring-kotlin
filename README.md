@@ -71,7 +71,7 @@ class YourBean {
 ```
 
 ###How can I get Jackson working correctly with Kotlin classes?
-You should register register [Jackson Kotlin module](https://github.com/FasterXML/jackson-module-kotlin). As of Spring Framework 4.3 / Spring Boot 1.4, you just have to add Maven or Gradle dependency and it will be registered automatically. With previous version, you will have to register it manually in one of your `@Configuration` classes:
+You should register [Jackson Kotlin module](https://github.com/FasterXML/jackson-module-kotlin). As of Spring Framework 4.3 / Spring Boot 1.4, you just have to add Maven or Gradle dependency and it will be registered automatically. With previous version, you will have to register it manually in one of your `@Configuration` classes:
 
 ```kotlin
 @SpringBootApplication
