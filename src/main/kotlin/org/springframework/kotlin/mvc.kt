@@ -9,7 +9,7 @@ import java.net.URI
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.getForObject(url: String, vararg uriVariables: Any) =
-        getForObject(url, T::class.java, uriVariables)
+        getForObject(url, T::class.java, *uriVariables)
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.getForObject(url: String, uriVariables: Map<String, Any?>) =
@@ -21,11 +21,11 @@ inline fun <reified T: Any> RestOperations.getForObject(url: URI) =
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.getForEntity(url: String, vararg uriVariables: Any) =
-        getForEntity(url, T::class.java, uriVariables)
+        getForEntity(url, T::class.java, *uriVariables)
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.postForObject(url: String, request: Any, vararg uriVariables: Any) =
-        postForObject(url, request, T::class.java, uriVariables)
+        postForObject(url, request, T::class.java, *uriVariables)
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.postForObject(url: String, request: Any, uriVariables: Map<String, *>) =
@@ -37,7 +37,7 @@ inline fun <reified T: Any> RestOperations.postForObject(url: URI, request: Any)
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.postForEntity(url: String, request: Any, vararg uriVariables: Any) =
-        postForEntity(url, request, T::class.java, uriVariables)
+        postForEntity(url, request, T::class.java, *uriVariables)
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.postForEntity(url: String, request: Any, uriVariables: Map<String, *>) =
@@ -49,7 +49,7 @@ inline fun <reified T: Any> RestOperations.postForEntity(url: URI, request: Any)
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.exchange(url: String, method: HttpMethod, requestEntity: HttpEntity<*>, vararg uriVariables: Any) =
-        exchange(url, method, requestEntity, T::class.java, uriVariables)
+        exchange(url, method, requestEntity, T::class.java, *uriVariables)
 
 @Throws(RestClientException::class)
 inline fun <reified T: Any> RestOperations.exchange(url: String, method: HttpMethod, requestEntity: HttpEntity<*>, uriVariables: Map<String, *>) =
