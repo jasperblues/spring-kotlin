@@ -84,6 +84,27 @@ open class Application {
     // ...
 ````
 
+
+### How can I get Jackson working correctly with Kotlin Data Classes?
+Once you have your [Jackson Kotlin module](https://github.com/FasterXML/jackson-module-kotlin) registered you can use Jackson annotations. It is pretty straightforward for annotations like `com.fasterxml.jackson.annotation.JsonIgnoreProperties` but can get more complex when trying to use Jackson field annotations.
+Assuming you have a Data Class - Person, that you would serialize to JSON but with snake case convention for field names. In Java you would just use `@JsonProperty("field_name")`. It will not work in Kotlin. Here you have to tell Kotlin compiler that annotation has to be placed on generated getter method 
+(as there are no backing fields in Kotlin Data Classes). You do that in the following way:  
+
+```
+data class Person(
+    @get:JsonProperty("name")
+    val name: String,
+    
+    @get:JsonProperty("last_name")
+    val lastName: String,
+    
+    @get:JsonProperty("year_of_birth")
+    val yearOfBirth: Int
+)
+```
+
+
+
 ### What are other Kotlin features or issues to follow?
 
 - [Support Kotlin nullable information in Spring MVC parameters](https://jira.spring.io/browse/SPR-14165)
