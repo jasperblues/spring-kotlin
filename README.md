@@ -1,9 +1,8 @@
 [![Build status](https://travis-ci.org/sdeleuze/spring-kotlin.svg?branch=master)](https://travis-ci.org/sdeleuze/spring-kotlin)
 
-`spring-kotlin` is a repository that contains Kotlin extensions, documentation,
-and any helpful assets that can help to build Spring + Kotlin applications. 
+`spring-kotlin` is a repository that contains Kotlin extensions, documentation, and any helpful assets that can help to build Spring + Kotlin applications. This project has been created after [this discussion](https://github.com/spring-projects/spring-boot/issues/5537) on Spring Boot issue tracker.
 
-This project has been created after [this discussion](https://github.com/spring-projects/spring-boot/issues/5537) on Spring Boot issue tracker.
+Notice that Spring Framework 5 will provide Kotlin extensions and support builtin, you can use [this link|https://jira.spring.io/issues/?filter=15463] to see Spring Framework Kotlin related JIRA issues.
 
 You will find  more information about using Spring Boot + Kotlin in these 2 blog posts:
  - [Developing Spring Boot applications with Kotlin](https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin)
@@ -33,11 +32,9 @@ Go to http://start.spring.io/#!language=kotlin, add your dependencies, choose Gr
 
 Spring applications are using proxies to deal with most `@Component` beans like `@Configuration`, `@Service`or `@Repository`. JDK dynamic proxies are used when possible (your bean should implement an interface, and `proxyTargetClass` should be set to `false`, which is the default) while CGLIB proxies are used with classes that do not expose methods with interfaces, and/or when `proxyTargetClass` is set to `true`.
 
-Unlike Java, Kotlin [have made the choice to have a `final` by default behavior](https://discuss.kotlinlang.org/t/classes-final-by-default/166), with `open` keyword used at class or method level to allow extending or overriding them. As a consequence, with CGLIB proxies you need to explicitely specify `open` at class and method level since they require to extend/override the class/methods for technical reasons. Kotlin team is working on a solution that will allow you to use CGLIB proxies without having to use the `open` keyword, see [KT-12149](https://youtrack.jetbrains.com/issue/KT-12149) for more details.
+Unlike Java, Kotlin [have made the choice to have a `final` by default behavior](https://discuss.kotlinlang.org/t/classes-final-by-default/166), with `open` keyword used at class or method level to allow extending or overriding them. As a consequence, with CGLIB proxies you need to explicitely specify `open` at class and method level since they require to extend/override the class/methods for technical reasons.
 
-Meanwhile, current best practice is:
- - Add `open` modifier at class level for `@Configuration` class and at `@Bean` methods level since they require CGLIB proxies
- - Use JDK dynamic proxies for other `@Component` beans like `@Service` and `@Repository` by implementing interfaces and making sure `proxyTargetClass=false`. Be aware that Spring Boot [set `proxyTargetClass=true` by default when JDBC is used](https://github.com/spring-projects/spring-boot/commit/58d660d10d7abb5fe2ea502b6c538714bede62ea#diff-3f2cf0894a5a46136680f76234aeee28R41), to use JDK dynamic proxies instead you just have to declare a `PersistenceExceptionTranslationPostProcessor` `@Bean` like [here](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/Application.kt#L34).
+But Kotlin now provides a solution to that issue with the `kotlin-spring` plugin provided with Kotlin 1.0.6+, see [this blog post](https://blog.jetbrains.com/kotlin/2016/12/kotlin-1-0-6-is-here/) for more information or [spring-boot-kotlin-demo]( https://github.com/sdeleuze/spring-boot-kotlin-demo) for a sample project. start.spring.io provide you projects pre-configured with the `spring-kotlin` plugin.
 
 ###Why annotation array attributes require `arrayOf()` for single value unlike in Java?
 
@@ -82,8 +79,7 @@ open class Application {
         Jackson2ObjectMapperBuilder().modulesToInstall(KotlinModule())
     
     // ...
-````
-
+```
 
 ### How can I get Jackson working correctly with Kotlin Data Classes?
 Once you have your [Jackson Kotlin module](https://github.com/FasterXML/jackson-module-kotlin) registered you can use Jackson annotations. It is pretty straightforward for annotations like `com.fasterxml.jackson.annotation.JsonIgnoreProperties` but can get more complex when trying to use Jackson field annotations.
@@ -103,7 +99,9 @@ data class Person(
 )
 ```
 
+###How can I make my JPA or Spring Data entities immutable?
 
+Use `kotlin-jpa` and/or `kotlin-noarg` compiler plugins as described in this [blog post](https://blog.jetbrains.com/kotlin/2016/12/kotlin-1-0-6-is-here/).
 
 ### What are other Kotlin features or issues to follow?
 
