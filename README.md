@@ -1,8 +1,8 @@
 [![Build status](https://travis-ci.org/sdeleuze/spring-kotlin.svg?branch=master)](https://travis-ci.org/sdeleuze/spring-kotlin)
 
-`spring-kotlin` is a repository that contains Kotlin extensions, documentation, and any helpful assets that can help to build Spring + Kotlin applications. This project has been created after [this discussion](https://github.com/spring-projects/spring-boot/issues/5537) on Spring Boot issue tracker.
+**Spring Framework 5 will provide Kotlin extensions and support builtin, so this specific library won't be needed for most common Spring + Kotlin features. you can use [this link](https://jira.spring.io/issues/?filter=15463) to see Spring Framework Kotlin related JIRA issues.**
 
-Notice that Spring Framework 5 will provide Kotlin extensions and support builtin, you can use [this link](https://jira.spring.io/issues/?filter=15463) to see Spring Framework Kotlin related JIRA issues.
+`spring-kotlin` is a repository that contains Kotlin extensions, documentation, and any helpful assets that can help to build Spring + Kotlin applications. This project has been created after [this discussion](https://github.com/spring-projects/spring-boot/issues/5537) on Spring Boot issue tracker.
 
 You will find  more information about using Spring Boot + Kotlin in these 2 blog posts:
  - [Developing Spring Boot applications with Kotlin](https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin)
