@@ -25,11 +25,11 @@ dependencies {
 
 ## Spring + Kotlin FAQ
 
-###What is the simplest way to start a Spring Boot + Kotlin application?
+### What is the simplest way to start a Spring Boot + Kotlin application?
 
 Go to http://start.spring.io/#!language=kotlin, add your dependencies, choose Gradle or Maven and click on "Generate Project" ;-)
 
-###Where this "Configuration problem: @Configuration class 'Foo' may not be final" error message come from?
+### Where this "Configuration problem: @Configuration class 'Foo' may not be final" error message come from?
 
 Spring applications are using proxies to deal with most `@Component` beans like `@Configuration`, `@Service`or `@Repository`. JDK dynamic proxies are used when possible (your bean should implement an interface, and `proxyTargetClass` should be set to `false`, which is the default) while CGLIB proxies are used with classes that do not expose methods with interfaces, and/or when `proxyTargetClass` is set to `true`.
 
@@ -37,11 +37,11 @@ Unlike Java, Kotlin [have made the choice to have a `final` by default behavior]
 
 But Kotlin now provides a solution to that issue with the `kotlin-spring` plugin provided with Kotlin 1.0.6+, see [this blog post](https://blog.jetbrains.com/kotlin/2016/12/kotlin-1-0-6-is-here/) for more information or [spring-boot-kotlin-demo]( https://github.com/sdeleuze/spring-boot-kotlin-demo) for a sample project. start.spring.io provide you projects pre-configured with the `spring-kotlin` plugin.
 
-###Why annotation array attributes require `arrayOf()` for single value unlike in Java?
+### Why annotation array attributes require `arrayOf()` for single value unlike in Java?
 
 That's a known Kotlin 1.0 issue quite annoying with Spring annotations like `@RequestMapping(method = arrayOf(RequestMethod.GET))`, that will be fixed in Kotlin 1.1, see issue [KT-11235](https://youtrack.jetbrains.com/issue/KT-11235) for more details. As a workaround, as of Spring Framework 4.3 / Spring Boot 1.4 you can use annotations aliases like `@GetMapping`, `@PostMapping`, etc.
 
-###Why `@Value("${thing}")` does not work with Kotlin?
+### Why `@Value("${thing}")` does not work with Kotlin?
 
 That's because `$` is used for string interpolation in Kotlin. Workarounds are:
  - Escaping `$`: `@Value("\${some.property}")`
@@ -50,7 +50,7 @@ That's because `$` is used for string interpolation in Kotlin. Workarounds are:
 
 See [this Stackoverflow response](http://stackoverflow.com/questions/33821043/spring-boot-change-property-placeholder-signifier/33883230#33883230) for more details.
 
-###What is the recommanded way to inject dependencies in a Spring Kotlin application
+### What is the recommanded way to inject dependencies in a Spring Kotlin application
 
 Try [to favor contructor injection](http://olivergierke.de/2013/11/why-field-injection-is-evil/). As of Spring Framework 4.3 / Spring Boot 1.4 you just have to write `class MessageController(val repository: MessageService)` and Spring will automatically autowire the constructor (there should be a single constructor with no default values). For previous versions, you need to write `class MessageController @Autowired constructor(val repository: MessageService)`.
 
@@ -68,7 +68,7 @@ class YourBean {
 }
 ```
 
-###How can I get Jackson working correctly with Kotlin classes?
+### How can I get Jackson working correctly with Kotlin classes?
 You should register [Jackson Kotlin module](https://github.com/FasterXML/jackson-module-kotlin). As of Spring Framework 4.3 / Spring Boot 1.4, you just have to add Maven or Gradle dependency and it will be registered automatically. With previous version, you will have to register it manually in one of your `@Configuration` classes:
 
 ```kotlin
@@ -100,7 +100,7 @@ data class Person(
 )
 ```
 
-###How can I make my JPA or Spring Data entities immutable?
+### How can I make my JPA or Spring Data entities immutable?
 
 Use `kotlin-jpa` and/or `kotlin-noarg` compiler plugins as described in this [blog post](https://blog.jetbrains.com/kotlin/2016/12/kotlin-1-0-6-is-here/).
 
